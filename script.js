@@ -4,6 +4,9 @@ lass Game {
         console.log('Initialisation du jeu');
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
+        if (!this.ctx) {
+    console.error("Impossible d'obtenir le contexte 2D du canvas");
+    return;
         this.players = [];
         this.platform = null;
         this.gravity = 0.5;
@@ -72,9 +75,9 @@ lass Game {
     }
 
     handleInput(e) {
-        if (e.key === 'a') this.players[0].moveLeft();
+        if (e.key === 'q') this.players[0].moveLeft();
         if (e.key === 'd') this.players[0].moveRight();
-        if (e.key === 'w') this.players[0].jump();
+        if (e.key === 'z') this.players[0].jump();
         if (e.key === 'ArrowLeft') this.players[1].moveLeft();
         if (e.key === 'ArrowRight') this.players[1].moveRight();
         if (e.key === 'ArrowUp') this.players[1].jump();
