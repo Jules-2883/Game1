@@ -1,6 +1,7 @@
 // game.js
-class Game {
+lass Game {
     constructor() {
+        console.log('Initialisation du jeu');
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.players = [];
@@ -12,19 +13,23 @@ class Game {
     }
 
     init() {
+        console.log('Méthode init appelée');
         this.canvas.width = 800;
         this.canvas.height = 400;
         document.body.appendChild(this.canvas);
+        console.log('Canvas ajouté au document');
 
-        this.players.push(new Player(50, 300, 'red'));
-        this.players.push(new Player(700, 300, 'blue'));
+        this.players.push(new Player(50, 300, 'white'));
+        this.players.push(new Player(700, 300, 'black'));
         this.platform = new Platform(0, 350, 800, 50);
+        console.log('Joueurs et plateforme créés');
 
         window.addEventListener('keydown', this.handleInput.bind(this));
         window.addEventListener('keyup', this.handleKeyUp.bind(this));
 
         this.lastTime = 0;
-        this.loop();
+        this.loop(0);
+        console.log('Boucle de jeu démarrée');
     }
 
     loop(currentTime) {
@@ -38,9 +43,10 @@ class Game {
     }
 
     update(deltaTime) {
-        this.players.forEach(player => {
+        this.players.forEach((player, index) => {
             player.update(deltaTime);
             this.checkCollision(player, this.platform);
+            console.log(`Joueur ${index + 1} mis à jour :`, player);
         });
 
         this.checkPlayerCollision();
@@ -48,8 +54,21 @@ class Game {
 
     render() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        console.log('Début du rendu');
+        
+        this.ctx.fillStyle = 'lightblue';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        
         this.platform.draw(this.ctx);
-        this.players.forEach(player => player.draw(this.ctx));
+        console.log('Plateforme dessinée');
+        
+        this.players.forEach((player, index) => {
+            console.log(`Tentative de dessin du joueur ${index + 1}`);
+            player.draw(this.ctx);
+        });
+        
+        console.log('Fin du rendu');
     }
 
     handleInput(e) {
@@ -83,7 +102,6 @@ class Game {
             p1.x + p1.width > p2.x &&
             p1.y < p2.y + p2.height &&
             p1.y + p1.height > p2.y) {
-            // Collision détectée, on applique une force de répulsion
             const force = 5;
             if (p1.x < p2.x) {
                 p1.vx -= force;
@@ -117,11 +135,11 @@ class Player {
         this.vy += game.gravity;
         this.vx *= game.friction;
 
-        // Empêcher le joueur de sortir de l'écran
         this.x = Math.max(0, Math.min(game.canvas.width - this.width, this.x));
     }
 
     draw(ctx) {
+        console.log(`Dessin du joueur à (${this.x}, ${this.y})`);
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
@@ -160,4 +178,6 @@ class Platform {
     }
 }
 
+console.log('Script chargé, création de l\'instance de jeu');
 const game = new Game();
+console.log('Instance de jeu créée');
