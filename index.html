@@ -3,16 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Jeu de Combat</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Jeu de Combat Avancé</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #87CEEB;
+        }
+        canvas {
+            border: 3px solid #000;
+        }
+    </style>
 </head>
 <body>
-    <h1>Titre</h1>
-    <div class="game-container">
-        <div id="player1" class="player"></div>
-        <div id="player2" class="player"></div>
-        <div class="platform"></div>
-    </div>
-    <script src="script.js"></script>
+    <script src="game.js"></script>
 </body>
 </html>
